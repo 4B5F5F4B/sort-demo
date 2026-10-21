@@ -1,5 +1,4 @@
 [build-system]
-# 自定义构建后端：模块来自 build_backend/custom_backend.py
 requires = []
 build-backend = "custom_backend"
 backend-path = ["build_backend"]

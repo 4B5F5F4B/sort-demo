@@ -16,13 +16,9 @@ VERSION = "0.1.0"
 DIST_INFO = f"{NAME}-{VERSION}.dist-info"
 
 
-script_path = os.path.abspath(__file__)
-script_dir  = os.path.dirname(script_path)
-os.chdir(script_dir)
 
 
 def _src_py_files() -> list[str]:
-    import magicpwn
     """src/ 下所有 .py 文件（相对 ROOT，正斜杠路径）。"""
     return sorted(
         str(p.relative_to(ROOT)).replace("\\", "/") for p in (ROOT / "src").rglob("*.py")
