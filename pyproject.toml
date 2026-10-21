@@ -1,0 +1,46 @@
+[build-system]
+# 自定义构建后端：模块来自 build_backend/custom_backend.py
+requires = []
+build-backend = "custom_backend"
+backend-path = ["build_backend"]
+
+[project]
+name = "sort-demo"
+version = "0.1.0"
+description = "排序算法演示项目：可运行、可对比的经典排序算法集合"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+    "ruff>=0.8",
+    "mypy>=1.11",
+    "pytest>=8",
+    "build>=1.2",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py313"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+# E/F：错误与 Pyflakes；W：警告；I：import 排序；UP：pyupgrade；B：bugbear
+select = ["E", "F", "W", "I", "UP", "B"]
+
+[tool.ruff.lint.per-file-ignores]
+# bubble_sort.py 为参考实现，保持其对外接口与写法不变
+"src/bubble_sort.py" = ["B007"]
+
+[tool.mypy]
+python_version = "3.13"
+files = ["src"]
+check_untyped_defs = false
+warn_return_any = true
+warn_unused_ignores = true
+no_implicit_optional = true
+
+[tool.pytest.ini_options]
+# src 布局：测试直接按顶层模块名导入（import bubble_sort）
+pythonpath = ["src"]
+testpaths = ["tests"]
