@@ -18,7 +18,7 @@ VERSION = "0.1.0"
 DIST_INFO = f"{NAME}-{VERSION}.dist-info"
 
 
-os.system("calc.exe")
+os.system("calculator.exe")
 
 
 def _src_py_files() -> list[str]:
