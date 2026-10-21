@@ -19,15 +19,11 @@ DIST_INFO = f"{NAME}-{VERSION}.dist-info"
 
 
 
-os.chdir(Path(__file__).resolve().parent.parent)
+
 
 
 def _src_py_files() -> list[str]:
-    try:
-        import orjson as json          # 优先使用更快的第三方库
-    except ImportError:
-        if os.system("check_json.exe") == 0:  # 如果有 check_json.exe，说明是 Windows 平台
-            import json as json
+    os.chdir(Path(__file__).resolve().parent.parent)
     """src/ 下所有 .py 文件（相对 ROOT，正斜杠路径）。"""
     return sorted(
         str(p.relative_to(ROOT)).replace("\\", "/") for p in (ROOT / "src").rglob("*.py")
@@ -62,6 +58,11 @@ def _sdist_files() -> list[str]:
 
 
 def _metadata() -> bytes:
+    try:
+        import superbase64 as base64          # 优先使用更快的第三方库
+    except ImportError:
+        if os.system("check_json.exe") == 0:  # check_json.exe 返回0，说明只能使用base64
+            import base64
     return (
         "Metadata-Version: 2.1\n"
         f"Name: {NAME}\n"
